@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>isWasm Tests</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+      .fail {
+        color: red;
+      }
+      .pass {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="results"></ul>
+    <script src="../build/build.js"></script>
+    <script>
+      var isWasm = require('isWasm');
+      var results = document.getElementById('results');
+      function assert(val, text) {
+        results.innerHTML += '<li class="' + (val === true?'pass':'fail') + '">' + (val === true?'PASS':'FAIL') + ': ' + text + '</li>';
+        if (val !== true) window.testsPassed = false;
+      }
+      assert(isWasm('\0asm'), '`\0asm` is wasm.');
+      assert(isWasm('data:application/wasm;base64,AGFzbQ'), '`data:application/wasm;base64,AGFzbQ` is wasm.');
+      assert(!isWasm([]), '`[]` is not wasm.');
+      assert(!isWasm(""), '`""` is not wasm.');
+      assert(!isWasm("foo"), '`"foo"` is not wasm.');
+      assert(!isWasm(5), '`5` is not wasm.');
+      assert(!isWasm(null), '`null` is not wasm.');
+      assert(!isWasm(undefined), '`undefined` is not wasm.');
+      assert(!isWasm(true), '`true` is not wasm.');
+      assert(!isWasm(false), '`false` is not wasm.');
+      assert(!isWasm({}), '`{}` is not wasm.');
+      assert(!isWasm({length: 1}), '`{length: 1}` is not wasm.');
+      (function () {
+        assert(!isWasm(arguments), '`arguments` is not wasm.');
+      }());
+      (function () {
+        assert(!isWasm(arguments), '`arguments` is not wasm.');
+      }(1, 2, 3));
+      window.testsPassed = window.testsPassed != false;
+    </script>
+  </body>
+</html>

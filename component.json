@@ -1,0 +1,13 @@
+{
+  "name": "is-wasm",
+  "repository": "girkovarpa/is-wasm",
+  "description": "Check if the given value is WebAssembly",
+  "version": "1.0.0",
+  "keywords": ["is-wasm", "es5", "wasm", "webassembly"],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "index.js"
+  ]
+}
